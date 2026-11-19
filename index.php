@@ -107,8 +107,17 @@ $fretes = $pdo->query("SELECT f.*, p.nome AS produto_nome, e.cliente AS cliente_
 <select name="transportadora" required><option value="">Escolha a transportadora</option><?php foreach($transportadores as $t) echo "<option value='".$t['nome']."'>".$t['nome']." - ".$t['veiculo']."</option>"; ?></select>
 <input name="valor" placeholder="Valor do frete" type="number" step="0.01" required>
 <input name="prazo" placeholder="Prazo - ex: 3 dias" required>
-<button name="gerar_frete">Gerar Frete</button></form>
+<button name="gerar_frete">Gerar Frete</button></form><div id="paradas-extras"></div>
+<button type="button" onclick="adicionarParada()">+ Adicionar Parada Extra</button>
 <h3>Fretes gerados:</h3>
 <?php foreach($fretes as $f) echo "✅ ".($f['data_frete'] ?? '')." | Produto: <b>".$f['produto_nome']."</b> | Cliente: <b>".$f['cliente_nome']." - ".$f['cidade']."</b> | Transportadora: <b>".$f['transportadora']."</b> | Valor: R$ ".$f['valor']." | Prazo: ".$f['prazo']."<br>"; ?>
 </div>
-</body></html>
+<script>
+function adicionarParada() {
+  const div = document.getElementById('paradas-extras');
+  const novo = document.createElement('input');
+  novo.name = 'parada_extra[]';
+  novo.placeholder = 'Parada extra - ex: Ponto de parada';
+  div.appendChild(novo);
+}
+</script></body></html>
